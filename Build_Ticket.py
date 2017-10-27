@@ -1,6 +1,17 @@
 from redminelib import Redmine
 import xlrd
 
+Tracker_dict = {'Bug':1,
+                'Feature':2,
+                'Support':3}
+
+priority_dict = {'Low':1,
+                 'Normal':2,
+                 'High':3,
+                 'Urgent':4,
+                 'Immediate':5}
+Status_dict = {'New':1}
+
 def open_excel(file = 'redmine.xlsx'):
       try:
             data = xlrd.open_workbook(file)
@@ -14,6 +25,7 @@ def read_excel(file = 'redmine.xlsx'):
       nrows = table.nrows
       ncols = table.ncols
       colnames =  table.row_values(1)
+      print(xlrd.xldate_as_tuple(table.cell(1,8).value, 0))
       return colnames
       '''
       list =[]
@@ -44,7 +56,8 @@ def buildTicket(tables):
 def main():
       tables = read_excel()
       print(tables[1])
-      buildTicket(tables)
+      print(int(priority_dict[tables[5]]))
+      #buildTicket(tables)
 
 if __name__ == "__main__":
       main()
